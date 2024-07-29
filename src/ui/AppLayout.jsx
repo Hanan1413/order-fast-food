@@ -8,13 +8,14 @@ function AppLayout() {
  const isLoading = navigation.state === "loading";
  console.log(navigation)
   return (
-    <div className="layout">
+    <div className="grid h-screen first-line:h-[600px] bg-red grid-rows-[auto_1fr_auto] gird-col-2  border-yellow-100" >
       {isLoading && <Loader />}
       <Header />
-      <main>
-        <h1>Content</h1>
+      <div className="overflow-scroll">
+      <main className="mx-auto  max-w-3x  ">
         <Outlet />
       </main>
+      </div>
       <CartOverview />
     </div>
   );
