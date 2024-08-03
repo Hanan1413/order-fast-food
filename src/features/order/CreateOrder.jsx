@@ -41,30 +41,25 @@ function CreateOrder() {
 
 
   return (
-    <div className="ml-3" >
-      <h2 className="my-3">Ready to order? Let's go!</h2>
+    <div className="ml-10" >
+      <h2 className=" text-xl font-semibold mt-5 mb-8">Ready to order? Let's go!</h2>
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
-        <div>
-          <label>First Name</label>
-          <div>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center"> 
+          <label className="sm:basis-40">First Name</label>
           <input type="text" name="customer" required className="input" />
 
-          </div>
         </div>
 
-        <div>
-          <label>Phone number</label>
-          <div>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label  className="sm:basis-40">Phone number</label>
             <input type="tel" name="phone" required   className="input"/>
-          </div>
         </div>
         {formErrors?.phone && formErrors.phone}
-        <div className="mt-2">
-          <label>Address</label>
-          <div>
+
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <label  className="sm:basis-40">Address</label>
             <input type="text" name="address" required   className="input"/>
-          </div>
         </div>
 
         <div className="mt-5">
@@ -75,12 +70,12 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority" >Want to yo give your order priority?</label>
+          <label htmlFor="priority"  className="ml-3">Want to yo give your order priority?</label>
         </div>
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>{isSubmitting ? 'Placing order' : 'Order Now'}</button>
+          <Button disabled={isSubmitting}>{isSubmitting ? 'Placing order' : 'Order Now'}</Button>
         </div>
       </Form>
     </div>

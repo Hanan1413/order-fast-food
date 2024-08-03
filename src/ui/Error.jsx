@@ -1,4 +1,5 @@
 import { useNavigate, useRouteError } from "react-router-dom";
+import LinkButton from "../ui/LinkButton";
 
 function Error() {
   // navigate to router
@@ -11,7 +12,7 @@ function Error() {
     <div>
       <h1>Something went wrong 😢</h1>
       <p>{error.data || error.message}</p>
-     <LinkButtton  to="-1">&larr; Go back </LinkButtton>
+     <LinkButton  to="-1">&larr; Go back </LinkButton>
 
     </div>
   );
