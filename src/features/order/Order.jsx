@@ -3,6 +3,7 @@
 import { useLoaderData } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import OrderItem from "../order/OrderItem";
+
 import {
   calcMinutesLeft,
   formatCurrency,
@@ -48,7 +49,7 @@ function Order() {
 
       <ul className="dive-stone-20 divide-y px-6">
       {cart.map((item)=>(
-          <OrderItem  item={item} key={item.id} />
+          <OrderItem  item={item} key={item.pizzaId} />
       ))}
 
       </ul>
