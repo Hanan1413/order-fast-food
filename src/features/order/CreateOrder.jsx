@@ -20,10 +20,18 @@ const isValidPhone = (str) =>
 
 
 function CreateOrder() {
- const [withPriority, setWithPriority] = useState(false);
+  const [withPriority, setWithPriority] = useState(false);
+  const {username,
+     status:addressStatus,
+      position,
+      address,
+      error: errorAddress,
+
+    } = useSelector((state) => state.user);
+  const isLoadingAddress = addressStatus ===  'loading'  ;  
   const formErrors = useActionData();
   const isSubmitting = navigation.state === 'submitting';
-  const username = useSelector((state) => state.user.username);
+  // const username = useSelector((state) => state.user.username);
 
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
@@ -42,7 +50,6 @@ function CreateOrder() {
   return (
     <div className="ml-10" >
       <h2 className=" text-xl font-semibold mt-5 mb-8">Ready to order? Let's go!</h2>
-      <button onClick={()=> dispatch(fetchAddress())}> Get Position</button>
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center"> 
@@ -57,10 +64,26 @@ function CreateOrder() {
         </div>
         {formErrors?.phone && formErrors.phone}
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-          <label  className="sm:basis-40">Address</label>
-            <input type="text" name="address" required   className="input"/>
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center ">
+          <label  className="sm:basis-40 relative">Address</label>
+            <input type="text" name="address" required   className="input " disabled={isLoadingAddress}
+            defaultValue={address}/> 
+          
+            <span className="absolute right-[3px]">
+            </span>
+
         </div>
+        {addressStatus === 'error' && (
+          <div class="flex justify-center">
+
+              <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700 w-fit flex justify-center">
+              {errorAddress}
+              </p>
+              </div>
+            )}
+         
+        {!position.latitude && !position.longitude &&  <Button onClick={()=> dispatch(fetchAddress())} type="small" disabled={isLoadingAddress}> Get Position</Button>
+      }
 
         <div className="mt-5">
           <input
@@ -73,9 +96,10 @@ function CreateOrder() {
           <label htmlFor="priority"  className="ml-3">Want to yo give your order priority?</label>
         </div>
 
-        <div>
+        <div  className="mb-5">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button disabled={isSubmitting}>{isSubmitting ? 'Placing order' : `Order Now ${formatCurrency(totalPrice)}`}</Button>
+          <input type="hidden" name="position" value={`${position.latitude}, ${position.longitude}` }/>
+          <Button disabled={isSubmitting || isLoadingAddress}>{isSubmitting ? 'Placing order' : `Order Now ${formatCurrency(totalPrice)}`}</Button>
         </div>
       </Form>
     </div>
